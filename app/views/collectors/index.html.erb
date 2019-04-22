@@ -1,0 +1,37 @@
+<% provide(:title, 'Collectors') %>
+<h2>Collectors</h2>
+<br>
+
+<%= will_paginate :params => { :sort => nil } %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= link_to "IP", :controller => "collectors", :sort => "ip" %></th>
+      <th><%= link_to "Updated", :controller => "collectors", :sort => "checked_at" %></th>
+      <th><%= link_to "Uptime", :controller => "collectors", :sort => "uptime" %></th>
+      <th>
+        <%= link_to "OS", :controller => "collectors", :sort => "host_os" %> /<br>
+        <%= link_to "LA", :controller => "collectors", :sort => "host_la" %>
+      </th>
+      <th>Downloads<br>(
+        <%= link_to "tot", :controller => "collectors", :sort => "downloads_total" %> /
+        in p / 
+        fail )
+      </th>
+      <th><%= link_to "Bitrate", :controller => "collectors", :sort => "downloads_bitrate" %></th>
+      <th>
+        <%= link_to "Storage Used", :controller => "collectors", :sort => "storage_used" %> /<br>
+        <%= link_to "Storage Free", :controller => "collectors", :sort => "storage_free" %>
+      </th>
+      <th><%= link_to "Memory", :controller => "collectors", :sort => "memory_used" %></th>
+      <th><%= link_to "Status", :controller => "collectors", :sort => "status" %></th>
+      <th><%= link_to "Enabled?", :controller => "collectors", :sort => "is_blocked" %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render @collectors %>
+  </tbody>
+</table>
+<%= will_paginate :params => { :sort => nil } %>
+
+<%= javascript_include_tag "ajax-submit" %>

@@ -1,0 +1,18 @@
+<tr>
+  <%= form_for(user, :remote => true) do |f| %>
+    <td><%= user.email %></td>
+    <td><%= user.created_at.strftime("%d %b %y") %></td>
+    <td><%= user.last_login_at.nil? ? "never" : time_ago_in_words(user.last_login_at) %></td>
+    <td><%= user.downloads.count %> /
+        <%= user.downloads.count(:conditions => "status = 1") %> /
+        <%= user.downloads.count(:conditions => "status = -1") %></td>
+    <td><%= f.check_box :is_confirmed, :disabled => true, :class => "submit" %></td>
+    <% if current_user?(user) %>
+      <td><%= f.check_box :is_admin, :disabled => true, :class => "submit" %></td>
+      <td><%= f.check_box :is_blocked, :disabled => true, :class => "submit" %></td>
+    <% else %>
+      <td><%= f.check_box :is_admin, :class => "submit" %></td>
+      <td><%= f.check_box :is_blocked, :class => "submit" %></td>
+    <% end %>
+  <% end %>
+</tr>

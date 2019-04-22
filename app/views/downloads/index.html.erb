@@ -1,0 +1,67 @@
+<% provide(:title, 'Downloads') %>
+<!-- Stats -->
+<div class="row-fluid">
+  <div class="span8">
+    <h2>User Stats (<i><%= truncate(current_user.email, :length => 30) %></i>)</h2>
+  </div>
+  <div class="span4">
+    <h2>Global Stats</h2>
+  </div>
+</div>
+<div class="row-fluid">
+  <div class="span8">
+    <h4>Downloads: <%= current_user.downloads.count %> total /
+                   <%= current_user.downloads.count(:conditions => "status = 1") %> in progress /
+                   <%= current_user.downloads.count(:conditions => "status = -1") %> failed</h4>
+  </div>
+  <div class="span4">
+    <h4>Collectors: <%= Collector.count %> total /
+                    <%= Collector.count(:conditions => "is_blocked = 0") %> active</h4>
+  </div>
+</div>
+<div class="row-fluid">
+  <div class="span8">
+    <h4>Download speed: <%= current_user.downloads.sum(:bitrate) %>&nbsp;Mbps</h4>
+  </div>
+  <div class="span4">
+    <h4>Download speed: <%= Download.sum(:bitrate) %>&nbsp;Mbps</h4>
+  </div>
+</div>
+<div class="row-fluid">
+  <div class="span8">&nbsp;</div>
+  <div class="span4">
+    <h4>Users: <%= User.count %> (<%= User.count(:conditions => "last_login_at >= TIMESTAMP 'today'") %> active today)</h4>
+  </div>
+</div>
+<br>
+
+<h2>New Download</h2>
+<%= form_for :download, :url => downloads_path, 
+                        :html => { :class => "well form-inline" },
+                        :remote => true do |f| %>
+  <div class="row-fluid">
+    <div class="span8">
+      <%= f.text_field :url, :style => "width: 350pt", :placeholder => "Enter URL" %>
+    </div>
+    <div class="span2">
+      <%= select :download, :quality, { :High => 10, 
+                                        :Medium => 5, 
+                                        :Low => 1 },
+            { :prompt => "Quality" }, :style => "width: 70pt;" %>
+    </div>
+    <div class="span2">
+      <%= f.submit "Start Download!", :class => "btn btn-primary submit" %>
+    </div>
+  </div>
+<% end %>
+
+<h2>My Downloads</h2>
+<br>
+
+<%= will_paginate %>
+
+<%= render @downloads %>
+
+<%= will_paginate %>
+
+<%= javascript_include_tag "ajax-submit" %>

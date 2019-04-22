@@ -1,0 +1,19 @@
+# PostgreSQL database connection
+
+common: &common
+  adapter: postgresql
+  username: getmedia
+  password: getmedia1407
+  host: localhost
+
+development:
+  <<: *common
+  database: getmedia_development
+
+test:
+  <<: *common
+  database: getmedia_test
+
+production:
+  <<: *common
+  database: getmedia_production

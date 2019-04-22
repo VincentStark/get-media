@@ -1,0 +1,6 @@
+$(".ajax-progress").hide();
+
+<% if !@ajax_error.nil? %>
+  $(".modal-body > p").text("<%= @ajax_error %>")
+  $("#ajax-error").modal("show");
+<% end %>

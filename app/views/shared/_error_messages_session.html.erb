@@ -1,0 +1,10 @@
+<% if !@session_errors.nil? %>
+  <div class="alert alert-error">
+    The form contains <%= pluralize(@session_errors.size, "error") %>:
+    <ul>
+    <% @session_errors.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>

@@ -1,0 +1,28 @@
+<% provide(:title, 'Users') %>
+<h2>Users</h2>
+<br>
+
+<%= will_paginate :params => { :sort => nil } %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= link_to "Email", :controller => "users", :sort => "email" %></th>
+      <th><%= link_to "Registered", :controller => "users", :sort => "created_at" %></th>
+      <th><%= link_to "Last Login", :controller => "users", :sort => "last_login_at" %></th>
+      <th>Downloads<br>(
+        <%= link_to "tot", :controller => "users", :sort => "downloads_total" %> /
+        in p /
+        fail )
+      </th>
+      <th><%= link_to "Cfrm?", :controller => "users", :sort => "is_confirmed" %></th>
+      <th><%= link_to "Adm?", :controller => "users", :sort => "is_admin" %></th>
+      <th><%= link_to "Bl?", :controller => "users", :sort => "is_blocked" %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render @users %>
+  </tbody>
+</table>
+<%= will_paginate :params => { :sort => nil } %>
+
+<%= javascript_include_tag "ajax-submit" %>

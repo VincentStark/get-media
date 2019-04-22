@@ -1,0 +1,17 @@
+<tr>
+  <%= form_for(collector, :remote => true) do |f| %>
+    <td><%= collector.ip %></td>
+    <td><%= time_ago_in_words(collector.checked_at) %></td>
+    <td><%= time_in_words(collector.uptime) %></td>
+    <td><%= collector.host_os %><br><%= collector.host_la %></td>
+    <td><%= collector.downloads.count %> /
+        <%= collector.downloads.count(:conditions => "status = 1") %> /
+        <%= collector.downloads.count(:conditions => "status = -1") %></td>
+    <td><%= collector.downloads.sum(:bitrate) %>&nbsp;Mbps</td>
+    <td><%= number_to_human_size(collector.storage_used * 1024) %> /
+        <%= number_to_human_size(collector.storage_free * 1024) %></td>
+    <td><%= number_to_human_size(collector.memory_used * 1024) %></td>
+    <td><%= ['offline', 'online'][collector.status] %></td>
+    <td><%= f.check_box :is_blocked, :class => "submit" %></td>
+  <% end %>
+</tr>

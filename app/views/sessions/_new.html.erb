@@ -1,0 +1,16 @@
+    <%= form_for :session, :url => sessions_path, :html => { :class => "well" } do |f| %>
+    <%= render 'shared/error_messages_session' %>
+      <fieldset class="center">
+        <legend class="center">Existing User</legend>
+        <div class="control-group">
+          <%= f.text_field :email, :class => "span3", :placeholder => "Email" %>
+          <%= f.password_field :password, :class => "span3", :placeholder => "Password" %>
+          <!-- TOFIX! Very bad hack with manual pixel hunting (style=...) -->
+          <label class="checkbox" style="text-align:left;margin-left:9em">
+            <%= f.check_box :remember_me %>&nbsp;Remember Me
+          </label>
+        </div>
+        <!-- TOFIX! Very bad hack with manual pixel hunting (style=...) -->
+        <%= f.submit "Login!", :class => "btn btn-large btn-primary", :style => "margin-top:34px;margin-bottom:22px" %>
+      </fieldset>
+    <% end %>

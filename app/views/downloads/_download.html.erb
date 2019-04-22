@@ -1,0 +1,79 @@
+<div class="container-fluid well">
+  <div class="row-fluid">
+    <!-- Thumbnail -->
+    <div class="span2">
+      <img src="<%= download.thumbnail %>" width="110" />
+    </div>
+    <!-- Info -->
+    <div class="span8">
+      <div class="row-fluid">
+        <div class="span12">
+          <b>URL:</b> <%= download.url %>
+        </div>
+      </div>
+      <div class="row-fluid" style="margin-top: 10px;">
+        <div class="span6">
+          <b>Title:</b> <%= download.title %>
+        </div>
+        <div class="span6">
+          <b>Filesize:</b> <%= number_to_human_size(download.size) %>
+        </div>
+      </div>
+      <div class="row-fluid">
+        <div class="span6">
+          <b>Author:</b> <%= download.author %>
+        </div>
+        <div class="span6">
+          <b>Quality:</b> <%= download.quality %>
+        </div>
+      </div>
+      <div class="row-fluid" style="margin-top: 10px;">
+        <div class="span10">
+          <!-- Progress bar -->
+          <% if download.status == 1 %>
+            <div class="progress progress-info progress-striped active">
+              <div class="bar" style="width: <%= download.progress %>%"></div>
+            </div>
+          <!-- Status messages -->
+          <% elsif download.status == 10 %>
+            <span class="label label-success">Download completed!</span>
+          <% elsif download.status == -1 %>
+            <span class="label label-important">Download failed!</span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <!-- Buttons -->
+    <div class="span2 center">
+      <%= form_for(download, :remote => true) do |f| %>
+        <% if download.status == 1 %>
+          <div class="row-fluid">
+            <div class="span12">
+              <%= f.hidden_field :action, :value => "cancel" %>
+              <%= f.submit "Cancel", :class => "btn btn-danger submit" %>
+            </div>
+          </div>
+        <% elsif download.status == -1 %>
+          <div class="row-fluid">
+            <div class="span12">
+              <%= f.hidden_field :action, :value => "remove" %>
+              <%= f.submit "Remove", :class => "btn btn-warning submit" %>
+            </div>
+          </div>
+        <% elsif download.status == 10 %>
+          <div class="row-fluid">
+            <div class="span12">
+              <%= f.hidden_field :action, :value => "remove" %>
+              <%= f.submit "Remove", :class => "btn btn-warning submit" %><br /><br />
+            </div>
+          </div>
+          <div class="row-fluid">
+            <div class="span12">
+              <a href="http://<%= download.collector.ip %>:<%= download.collector.url_port %>/downloads/<%= Digest::MD5.hexdigest(download.url) %>" class="btn btn-success">Get File</a>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
